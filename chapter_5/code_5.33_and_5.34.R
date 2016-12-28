@@ -43,7 +43,7 @@ model{
 
     C <- 10000
     for (i in 1:N){
-        eros[i] ~ dpois(Zeros.mean[i])
+        Zeros[i] ~ dpois(Zeros.mean[i])
         Zeros.mean[i] <- -LL[i] + C
 
         #mu[i] <- 1/(1+exp(-eta[i])) # can use for logit(mu[i]) below

@@ -1,3 +1,11 @@
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
+
+# Code 4.6 -cMultivariate normal linear model in R using JAGS
+
 require(R2jags)
 
 set.seed(1056)                              # set seed to replicate example
