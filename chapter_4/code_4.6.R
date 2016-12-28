@@ -46,10 +46,10 @@ inits <- function () {
 
 params <- c ("beta", "sigma")
 
-normOfit <- jags (data = model.data,
+normOfit <- jags(data = model.data,
                   inits = inits,
                   parameters = params,
-                  mode1 = textConnection(NORMO),
+                  model = textConnection(NORM),
                   n.chains = 3,
                   n.iter = 15000,
                   n.thin = 1,
