@@ -20,7 +20,7 @@ xb <- 1 + 2.0*x1 + 1.5*x2
 xc <- 2 - 5.0*x1 + 3*x2
 
 exb <- exp(xb)
-exc <- -1/(1 + exp(-xc))
+exc <- 1/(1 + exp(-xc))
 alpha <- 2
 
 zinby <- rzinegbin(n=nobs, munb = exb, size=1/alpha, pstr0=exc)
@@ -48,7 +48,7 @@ ZINB<-"model{
     for (i in 1:Kc) { beta[i] ~ dnorm(0, 0.0001)}
     for (i in 1:Kb) { gamma[i] ~ dnorm(0, 0.0001)}
 
-    alpha ~ dunif(0.001, 5)
+    alpha ~ dunif(0.001, 5) 
 
     # Likelihood
     for (i in 1:N) {
@@ -58,6 +58,7 @@ ZINB<-"model{
         log(mu[i]) <- inprod(beta[], Xc[i,])
         logit(Pi[i]) <- inprod(gamma[], Xb[i,])
     } }"
+
 
 W <- zinbdata$zinby
 W[zinbdata$zinby > 0] <- 1

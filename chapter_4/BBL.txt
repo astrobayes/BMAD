@@ -1,0 +1,24 @@
+
+model{
+    # Diffuse normal priors betas
+    for (i in 1:K) { beta[i] ~ dnorm(0, 0.0001)}
+
+    # Prior for sigma
+    sigma ~ dunif(0, 100)
+
+    C <- 10000
+    for (i in 1:N){
+        Zeros[i] ~ dpois(Zeros.mean[i])
+        Zeros.mean[i] <- -LL[i] + C
+
+        #mu[i] <- 1/(1+exp(-eta[i])) # can use for logit(mu[i]) below
+        logit(mu[i]) <- max(-20, min(20, eta[i]))
+        L1[i] <- loggam(m[i]+1) - loggam(Y[i]+1) - loggam(m[i]-Y[i]+1)
+        L2[i] <- loggam(1/sigma) + loggam(Y[i]+mu[i]/sigma)
+        L3[i] <- loggam(m[i] - Y[i]+(1-mu[i])/sigma) - loggam(m[i]+1/sigma)
+        L4[i] <- loggam(mu[i]/sigma) + loggam((1-mu[i])/sigma)
+        LL[i] <- L1[i] + L2[i] + L3[i] - L4[i]
+        eta[i] <- inprod(beta[], X[i,])
+    }
+}
+
