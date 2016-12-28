@@ -85,5 +85,5 @@ print(ZINB, intervals=c(0.025, 0.975), digits=3)
 source("CH-Figures.R")
 
 out <- ZINB$BUGSoutput
-MyBUGSHist(out,c(uNames("beta",K),"sigma"))
-MyBUGSChains(out,c(uNames("beta",K),"sigma"))
+MyBUGSHist(out,c(uNames("beta",Kc),"alpha",uNames("gamma",Kb)))
+MyBUGSChains(out,c(uNames("beta",Kc),"alpha",uNames("gamma",Kb)))
