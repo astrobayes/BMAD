@@ -1,5 +1,8 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2017, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 
 # Code 5.36 - Beta-binomial model with synthetic data in Python using Stan
 # 1 response (y) and 1 explanatory variables (x1)

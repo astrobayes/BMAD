@@ -1,5 +1,8 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2017, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 
 # Code 6.2 Synthetic Poisson data and model in R: 
 #          binary and continuous predictors
@@ -17,4 +20,3 @@ pois <- data.frame(py, x1_2, x2)
 poi <- glm(py ~ x1_2 + x2, family=poisson, data=pois)
 
 summary(poi)
-attach(pois)

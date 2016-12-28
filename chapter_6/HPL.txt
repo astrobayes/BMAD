@@ -1,0 +1,20 @@
+
+model{
+    # Priors beta and gamma
+    for (i in 1:Kc) {beta[i] ~ dnorm(0, 0.0001)}
+    for (i in 1:Kb) {gamma[i] ~ dnorm(0, 0.0001)}
+
+    # Likelihood using zero trick
+    C <- 10000
+
+    for (i in 1:N) {
+        Zeros[i] ~ dpois(-ll[i] + C)
+        LogTruncPois[i] <- log(Pi[i]) + Y[i] * log(mu[i]) - mu[i] -(log(1 - exp(-mu[i])) + loggam(Y[i] + 1) )
+        z[i] <- step(Y[i] - 0.0001)
+        l1[i] <- (1 - z[i]) * log(1 - Pi[i])
+        l2[i] <- z[i] * (log(Pi[i]) + LogTruncPois[i])
+        ll[i] <- l1[i] + l2[i]
+        log(mu[i]) <- inprod(beta[], Xc[i,])
+        logit(Pi[i]) <- inprod(gamma[], Xb[i,])
+     }
+}

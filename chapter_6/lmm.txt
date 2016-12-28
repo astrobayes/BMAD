@@ -1,0 +1,23 @@
+
+model {
+    # Diffuse normal priors for regression parameters
+    beta ~ dmnorm(b0[], B0[,])
+
+    # Priors for random intercept groups
+    a ~ dmnorm(a0, tau.plot * A0[,])
+
+    # Priors for the two sigmas and taus
+    tau.plot <- 1 / (sigma.plot * sigma.plot)
+    tau.eps <- 1 / (sigma.eps * sigma.eps)
+    
+    sigma.plot ~ dunif(0.001, 10)
+    sigma.eps ~ dunif(0.001, 10)
+
+    # Likelihood
+    for (i in 1:N) {
+        Y[i] ~ dnorm(mu[i], tau.eps)
+        mu[i] <- eta[i]
+        eta[i] <- inprod(beta[], X[i,]) + a[re[i]]
+    }
+}
+

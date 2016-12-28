@@ -1,0 +1,28 @@
+
+model{
+    # Priors beta
+    for (i in 1:K) { beta[i] ~ dnorm(0, 0.0001)}
+
+    # Prior for delta parameter of GP distribution
+    delta ~ dunif(-1, 1)
+
+    C <- 10000
+    for (i in 1:N){
+        Zeros[i] ~ dpois(Zeros.mean[i])
+        Zeros.mean[i] <- -L[i] + C
+        l1[i] <- log(mu[i])
+        l2[i] <- (Y[i] - 1) * log(mu[i] + delta * Y[i])
+        l3[i] <- -mu[i] - delta * Y[i]
+        l4[i] <- -loggam(Y[i] + 1)
+        L[i] <- l1[i] + l2[i] + l3[i] + l4[i]
+        mu[i] <- (1 - delta)*exp(eta[i])
+        eta[i] <- inprod(beta[], X[i,])
+    }
+
+    # Discrepancy measures: mean, variance, Pearson residuals
+    for (i in 1:N){
+        ExpY[i] <- mu[i] / (1 - delta)
+        VarY[i] <- mu[i] / ((1 - delta)^3)
+        Pres[i] <- (Y[i] - ExpY[i]) / sqrt(VarY[i])
+    } }
+    

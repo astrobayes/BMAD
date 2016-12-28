@@ -1,5 +1,8 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2017, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 
 # from Code 6.9 - Synthetic negative binomial data and model in R
 
@@ -43,11 +46,11 @@ sink("NBGLM.txt")
 
 cat("
     model{
-    # Priors for coefficients
-    for (i in 1:K) { beta[i] ~ dnorm(0, 0.0001)}
-
     # Prior for dispersion
     theta ~ dunif(0.001, 5)
+
+    # Priors for coefficients
+    for (i in 1:K) { beta[i] ~ dnorm(0, 0.0001)}
 
     # Likelihood function
     for (i in 1:N){
@@ -68,7 +71,7 @@ inits <- function () {
        theta = runif(0.00, 5) # dispersion
    )}
 
-params <- c("beta", "theta")
+params <- c("theta", "beta")
 
 NB2 <- jags(data = model.data,
             inits = inits,

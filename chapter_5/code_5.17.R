@@ -1,5 +1,8 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2017, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 
 #  5.15 - Synthetic data from logistic model in R
 
