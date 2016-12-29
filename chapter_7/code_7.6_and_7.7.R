@@ -13,11 +13,8 @@ rztp <- function(N, lambda){
 }
 
 # Sample size
-<<<<<<< HEAD
-nobs <- 2000
-=======
 nobs <- 1000
->>>>>>> 17019ccad48c4ad4b9e6d7d2900460206c9faad4
+
 
 # Generate predictors, design matrix
 x1 <- runif(nobs,-0.5,2.5)
@@ -93,11 +90,7 @@ ZAP <- jags(data = model.data,
             model = "HPL.txt",
             n.thin = 1,
             n.chains = 3,
-<<<<<<< HEAD
             n.burnin = 2500,
-=======
-            n.burnin = 2000,
->>>>>>> 17019ccad48c4ad4b9e6d7d2900460206c9faad4
             n.iter = 5000)
 
 print(ZAP, intervals=c(0.025, 0.975), digits=3)

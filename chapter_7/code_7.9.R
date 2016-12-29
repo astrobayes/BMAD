@@ -7,7 +7,7 @@
 set.seed(33559)
 
 # Sample size
-nobs <- 1000
+nobs <- 750
 
 # Generate predictors, design matrix
 x1 <- runif(nobs,0,4)
@@ -87,7 +87,7 @@ inits <- function () {
        r = runif(1, 0,100) )}
 
 # Parameter values to be displayed in output
-params <- c("beta", "gamma", "r")
+params <- c("beta", "gamma", "phi")
 
 # MCMC sampling
 ZAG <- jags(data = model.data,
