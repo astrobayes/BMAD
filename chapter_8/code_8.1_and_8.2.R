@@ -43,7 +43,6 @@ Nre <- length(unique(normr$Groups))
 model.data <- list(
   Y = normr$y,                                            # response
   X = X,                                                  # covariates
-  K = K,                                                  # number of betas
   N = nrow(normr),                                        # rows in model
   re = re,                                                # random effect
   b0 = rep(0,K),                                          # parameter priors with initial 0 value
