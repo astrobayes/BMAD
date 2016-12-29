@@ -43,7 +43,7 @@ JAGS.data <- list(
 
 load.module('glm')
 
-sink("ZAGGLM.txt")
+sink("ZALN.txt")
 
 cat("
 model{
@@ -87,7 +87,7 @@ params <- c("beta", "gamma", "sigmaLN")
 ZALN <- jags(data = JAGS.data,
              inits = inits,
              parameters = params,
-             model = "ZAPGLM.txt",
+             model = "ZALN.txt",
              n.thin = 1,
              n.chains = 3,
              n.burnin = 2500,

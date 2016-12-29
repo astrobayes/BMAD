@@ -93,7 +93,7 @@ params <- c("beta", "gamma", "r")
 ZAG <- jags(data = model.data,
             inits = inits,
             parameters = params,
-            model = "ZAPGLM.txt",
+            model = "ZAGGLM.txt",
             n.thin = 1,
             n.chains = 3,
             n.burnin = 2500,
