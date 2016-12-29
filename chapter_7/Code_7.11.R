@@ -10,7 +10,7 @@ library(R2jags)
 set.seed(33559)
 
 # Sample size
-nobs <- 1000
+nobs <- 3000
 
 # Generate predictors, design matrix
 x1 <- runif(nobs,0,2.5)
@@ -28,7 +28,6 @@ bern <- rbinom(nobs,size=1, prob=pi)
 lndata$y <- lndata$y*bern
 Xc <- model.matrix(~ 1 + x1,data = lndata)
 Xb <- model.matrix(~ 1 + x1,data = lndata)
-
 Kc <- ncol(Xc)
 Kb <- ncol(Xb)
 

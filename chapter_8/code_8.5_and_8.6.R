@@ -6,8 +6,6 @@
 
 # Code 8.5 - Simulated random intercept binary logistic data
 
-set.seed=13531
-
 N <- 4000                                     # 20 groups, each with 200 observations
 NGroups <- 20
 
