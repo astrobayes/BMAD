@@ -25,7 +25,7 @@ poy <- rztp(nobs, exb)
 pdata <- data.frame(poy, x1)
 
 # Generate predictors for binary part
-xc <- -2 + 4.5*x1
+xc <- -3 + 4.5*x1
 
 # Construct filter
 pi <- 1/(1+exp((xc)))

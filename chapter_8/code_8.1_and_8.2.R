@@ -38,7 +38,7 @@ X <- model.matrix(~ x1 + x2, data = normr)
 K <- ncol(X)
 
 re <- as.numeric(normr$Groups)
-Nre <- length
+Nre <- length(unique(normr$Groups))
 
 model.data <- list(
   Y = normr$y,                                            # response
