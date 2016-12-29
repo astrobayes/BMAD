@@ -8,7 +8,7 @@
 
 library(R2jags)
 
-X <- model.matrix(˜ x1 + x2, data = logitr)
+X <- model.matrix(~ x1 + x2, data = logitr)
 K <- ncol(X)
 re <- as.numeric(logitr$Groups)
 Nre <- length(unique(logitr$Groups))
