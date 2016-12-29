@@ -4,8 +4,6 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 7.9 - Bayesian log-gamma–logit hurdle model in R using JAGS
-
 set.seed(33559)
 
 # Sample size
@@ -89,7 +87,7 @@ inits <- function () {
        r = runif(1, 0,100) )}
 
 # Parameter values to be displayed in output
-params <- c("beta", "gamma", "phi")
+params <- c("beta", "gamma", "r")
 
 # MCMC sampling
 ZAG <- jags(data = model.data,
