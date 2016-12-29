@@ -6,7 +6,7 @@
 
 # Code 8.5 - Simulated random intercept binary logistic data
 
-set.seed=13531
+#set.seed(13531)
 
 N <- 4000                                     # 20 groups, each with 200 observations
 NGroups <- 20
@@ -39,3 +39,4 @@ BayLogitRI <- MCMCglmm(y ~ x1 + x2, random= ~Groups,
                        verbose=FALSE, burnin=10000, nitt=20000)
 
 summary(BayLogitRI)
+
