@@ -54,7 +54,7 @@ model{
     sigmaLN ~ dgamma(1e-3, 1e-3)
 
     # Likelihood using the zero trick
-    C <- 10000
+    C <- 1e10
     for (i in 1:N) {
         Zeros[i] ~ dpois(-ll[i] + C)
 
@@ -62,11 +62,13 @@ model{
         ln1[i] <- -(log(Y[i]) + log(sigmaLN) + log(sqrt(2 * sigmaLN)))
         ln2[i] <- -0.5 * pow((log(Y[i]) - mu[i]),2)/(sigmaLN * sigmaLN)
         LN[i] <- ln1[i] + ln2[i]
+
         z[i] <- step(Y[i] - 1e-5)
         l1[i] <- (1 - z[i]) * log(1 - Pi[i])
         l2[i] <- z[i] * ( log(Pi[i]) + LN[i])
         ll[i] <- l1[i] + l2[i]
-        log(mu[i]) <- inprod(beta[], Xc[i,])
+#        log(mu[i]) <- inprod(beta[], Xc[i,])
+        mu[i] <- inprod(beta[], Xc[i,])
         logit(Pi[i]) <- inprod(gamma[], Xb[i,])
         }
     }", fill = TRUE)
