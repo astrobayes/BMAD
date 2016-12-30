@@ -54,7 +54,7 @@ model{
     sigmaLN ~ dgamma(1e-3, 1e-3)
 
     # Likelihood using the zero trick
-    C <- 1e10
+    C <- 10000
     for (i in 1:N) {
         Zeros[i] ~ dpois(-ll[i] + C)
 
@@ -67,7 +67,6 @@ model{
         l1[i] <- (1 - z[i]) * log(1 - Pi[i])
         l2[i] <- z[i] * ( log(Pi[i]) + LN[i])
         ll[i] <- l1[i] + l2[i]
-#        log(mu[i]) <- inprod(beta[], Xc[i,])
         mu[i] <- inprod(beta[], Xc[i,])
         logit(Pi[i]) <- inprod(gamma[], Xb[i,])
         }
