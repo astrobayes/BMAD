@@ -40,7 +40,6 @@ Nre <- length(unique(logitr$Groups))
 model.data <- list(
   Y = logitr$y,                       # Response
   X = X,                              # Covariates
-  K = K,                              # Num. betas
   N = nrow(logitr),                   # Sample size
   re = logitr$Groups,                 # Random effects
   b0 = rep(0,K),
@@ -90,3 +89,4 @@ LRI0 <- jags(data = model.data,
              n.iter = 7000)
 
 print(LRI0, intervals=c(0.025, 0.975), digits=3)
+
