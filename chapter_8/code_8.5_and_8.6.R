@@ -37,3 +37,4 @@ BayLogitRI <- MCMCglmm(y ~ x1 + x2, random= ~Groups,
                        verbose=FALSE, burnin=10000, nitt=20000)
 
 summary(BayLogitRI)
+
