@@ -4,6 +4,30 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
+
+# Data from Code 8.5 - Simulated random intercept binary logistic data
+
+N <- 4000                                     
+NGroups <- 20
+x1 <- runif(N)
+x2 <- runif(N)
+
+Groups <- rep(1:20, each = 200)
+
+a <- rnorm(NGroups, mean = 0, sd = 0.5)
+eta <- 1 + 0.2 * x1 - 0.75 * x2 + a[Groups]
+mu <- 1/(1+exp(-eta))
+
+y <- rbinom(N, prob=mu, size=1)
+
+logitr <- data.frame(
+  y = y,
+  x1 = x1,
+  x2 = x2,
+  Groups = Groups,
+  RE = a[Groups]
+)
+
 # Code 8.7 - Bayesian random intercept binary logistic model in R using JAGS
 
 library(R2jags)
@@ -47,12 +71,6 @@ model {
 }",fill = TRUE)
 
 sink()
-
-num ~ dnorm(0, 0.0016)
-denom ~ dnorm(0, 1)
-
-sigma.re <- abs(num / denom)
-tau.re <- 1 / (sigma.re * sigma.re)
 
 inits <- function () {
   list(beta = rnorm(K, 0, 0.01),
