@@ -1,0 +1,39 @@
+path_to_obs		= None   	           # path to observed data 
+
+param_to_fit 		= mean 	std  	           # parameters to fit
+param_to_sim    	= mean  std  n	           # parameters needed for simulation
+
+prior_func	        = my_prior flat_prior      # one prior function for each parameter
+                                                   # under consideration 
+
+simulation_func = my_simulation                    # simulation function
+distance_func	= my_distance                      # distance function
+
+
+mean_prior_par_name      = pmin pmax               # parameters for prior distribution  
+mean_prior_par_val       = -2.0  4.0               # values for prior distribution   
+
+std_prior_par_name       = pmin  pmax              # parameters for prior distribution
+std_prior_par_val        =  0.1  5.0               # values for prior distribution
+	
+mean_lim                 = -2.0  4.0               # extreme limits for parametes
+std_lim                  = 0.1  5.0                #
+		           
+
+mean		= 2.0			           # parameters values need for simulation
+std		= 1.0                              #
+n		= 1000                             #
+
+M 		= 100				   # number of particle in each particle system
+Mini            = 200                              # number of draws for 1st particle system
+delta 		= 0.25				   # convergence criteria
+qthreshold 	= 0.75				   # quantile in distance threshold 
+
+file_root 	= toy_model_PS                     # root to output files names 
+screen          = 0			           # rather (1) or not (0) to screen outputs
+ncores          = 1				   # number of cores
+split_output    = 1                                # number of intermediate steps written to file
+
+
+
+

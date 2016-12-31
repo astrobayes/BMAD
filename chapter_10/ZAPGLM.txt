@@ -1,0 +1,22 @@
+
+model{
+# 1A. Priors beta and gamma
+for (i in 1:Kc) {beta[i] ~ dnorm(0, 0.0001)}
+for (i in 1:Kb) {gamma[i] ~ dnorm(0, 0.0001)}
+# 1C. Prior for r parameter
+sigmaLN ~ dgamma(1e-3, 1e-3)
+# 2. Likelihood (zero trick)
+C <- 1e10
+for (i in 1:N) {
+Zeros[i] ~ dpois(-ll[i] + C)
+ln1[i] <- -(log(Y[i]) +log(sigmaLN)+log(sqrt(2*sigmaLN)))
+ln2[i] <- -0.5*pow((log(Y[i])-mu[i]),2)/(sigmaLN*sigmaLN)
+LN[i] <- ln1[i]+ln2[i]
+z[i] <- step(Y[i] - 1e-5)
+l1[i] <- (1 - z[i]) * log(1 - Pi[i])
+l2[i] <- z[i] * ( log(Pi[i]) + LN[i])
+ll[i] <- l1[i] + l2[i]
+mu[i] <- inprod(beta[], Xc[i,])
+logit(Pi[i]) <- inprod(gamma[], Xb[i,])
+}
+}

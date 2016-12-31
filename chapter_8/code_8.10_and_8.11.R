@@ -7,7 +7,7 @@
 
 # Code 8.10 - Random intercept Poisson data in R
 
-N <- 3000                        # 10 groups, each with 200 observations
+N <- 2000                        # 10 groups, each with 200 observations
 NGroups <- 10
 
 x1 <- runif(N)
