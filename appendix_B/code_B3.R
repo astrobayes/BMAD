@@ -6,7 +6,7 @@ x3 <- c(1,0,1,0,1,0,1,0,1,0,1,0)
 ratep <-data.frame(y,m,x1,x2,x3)
 
 require(R2jags)
-X <- model.matrix(~ x1 + x2+x3, data = ratep)
+X <- model.matrix(~ x1 + x2 + x3, data = ratep)
 K <- ncol(X)
 model.data <- list(Y = ratep$y,
                    N = nrow(ratep),
