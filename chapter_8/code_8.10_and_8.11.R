@@ -40,7 +40,6 @@ Nre <- length(unique(poir$Groups))
 model.data <- list(
   Y = poir$y,                      # response
   X = X,                           # covariates
-  K = K,                           # num. betas
   N = nrow(poir),                  # sample size
   re = poir$Groups,                # random effects
   b0 = rep(0,K),
