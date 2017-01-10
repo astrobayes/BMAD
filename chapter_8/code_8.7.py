@@ -13,17 +13,21 @@ from scipy.stats import norm, uniform, bernoulli
 
 # Data
 np.random.seed(13531)                 # set seed to replicate example
-N = 4000                              # number of obs in model 
+N = 40000                              # number of obs in model 
 NGroups = 20
 
 x1 = uniform.rvs(size=N)
 x2 = uniform.rvs(size=N)
-Groups = np.array([200 * [i] for i in range(20)]).flatten()
+Groups = np.array([2000 * [i] for i in range(20)]).flatten()
 
-a = norm.rvs(loc=0, scale=0.5, size=NGroups)
+#a = norm.rvs(loc=0, scale=0.5, size=NGroups)
+a = np.array([0.579, -0.115, -0.125, 0.169, -0.500, -1.429, -1.171, -0.205, 0.193,
+0.041, -0.917, -0.353, -1.197, 1.044, 1.084, -0.085, -0.886, -0.352,
+-1.398, 0.350])
+
 eta = 1 + 0.2 * x1 - 0.75 * x2 + a[list(Groups)]
 mu = 1.0/(1.0 + np.exp(-eta))
-y = bernoulli.rvs(mu, size=N)
+y = bernoulli.rvs(mu)
 
 X = sm.add_constant(np.column_stack((x1,x2)))
 K = X.shape[1]
@@ -64,7 +68,7 @@ data{
 parameters{
     vector[K] beta;
     vector[NGroups] a;
-    real<lower=0> sigma_re;
+    real<lower=0, upper=100> sigma_re;
 }
 transformed parameters{
     vector[N] eta;
@@ -72,16 +76,16 @@ transformed parameters{
  
     eta = X * beta;
     for (i in 1:N){ 
-        p[i] = eta[i] + a[re[i]+1];
+        p[i] = 1.0/(1.0 + exp(-(eta[i] + a[re[i]+1])));
     }
 }
 model{    
-    sigma_re ~ cauchy(0, 25);
+    #sigma_re ~ cauchy(0, 25);
 
     beta ~ multi_normal(b0, B0);
     a ~ multi_normal(a0, sigma_re * A0);
 
-    Y ~ bernoulli_logit(p);  
+    Y ~ bernoulli(p);  
 }
 """
 

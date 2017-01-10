@@ -4,31 +4,34 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 8.5b - Simulated random intercept binary logistic data
+# Code 8.14b Random intercept negative binomial model using pymc3
+
 
 import numpy as np
 import pymc3 as pm
+import statsmodels.api as sm
 
-from scipy.stats import norm, uniform, bernoulli
+from scipy.stats import norm, uniform, nbinom
 
 # Data
-np.random.seed(13531)                 # set seed to replicate example
-N = 4000                              # number of obs in model 
-NGroups = 20
+np.random.seed(1656)                 # set seed to replicate example
+N = 2000                             # number of obs in model 
+NGroups = 10
 
 x1 = uniform.rvs(size=N)
 x2 = uniform.rvs(size=N)
-Groups = np.array([200 * [i] for i in range(20)]).flatten()
 
+Groups = np.array([200 * [i] for i in range(NGroups)]).flatten()
 a = norm.rvs(loc=0, scale=0.5, size=NGroups)
-
 eta = 1 + 0.2 * x1 - 0.75 * x2 + a[list(Groups)]
-mu = 1.0/(1.0 + np.exp(-eta))
-y = bernoulli.rvs(mu, size=N)
+mu = np.exp(eta)
+
+y = nbinom.rvs(mu, 0.5)
+
 
 with pm.Model() as model: 
     # Define priors
-    sigma = pm.Uniform('sigma', 0, 100)
+    alpha = pm.Uniform('sigma', 0, 100)
     sigma_a = pm.Uniform('sigma_a', 0, 10)
     beta1 = pm.Normal('beta1', 0, sd=100)
     beta2 = pm.Normal('beta2', 0, sd=100)
@@ -43,7 +46,7 @@ with pm.Model() as model:
     eta = beta1 + beta2*x1 + beta3*x2 + a_param[Groups]
     
     # Define likelihood
-    y = pm.Normal('y', mu=1.0/(1.0 + pm.exp(-eta)), sd=sigma, observed=y)
+    y = pm.NegativeBinomial('y', mu=pm.exp(eta), alpha=alpha, observed=y)
     
     # Fit
     start = pm.find_MAP()                        # Find starting value by optimization

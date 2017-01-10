@@ -4,6 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
+set.seed(1656)
 
 # Code 8.10 - Random intercept Poisson data in R
 
