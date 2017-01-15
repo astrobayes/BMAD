@@ -62,7 +62,6 @@ data{
 parameters{
     vector[K] beta;
     vector[NGroups] a;
-    vector[NGroups] b;
     real<lower=0> sigma_re;
     real<lower=0> alpha;
 }
@@ -91,7 +90,7 @@ fit = pystan.stan(model_code=stan_code, data=model_data, iter=5000, chains=3, th
                   warmup=4000, n_jobs=3)
 
 # Output
-nlines = 30                                  # number of lines in screen output
+nlines = 20                                  # number of lines in screen output
 
 output = str(fit).split('\n')
 

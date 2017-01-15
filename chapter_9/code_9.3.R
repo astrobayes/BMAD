@@ -15,10 +15,11 @@ nvar <- 15                       # number of predictors
 rho <- 0.6                       # correlation between predictors
 
 p <- rbinom(nvar,1,0.2)
-beta <- round(p*rnorm(nvar,0,5),2)
+# beta <- round(p*rnorm(nvar,0,5),2)
+beta = c(-2.43, 1.60, 0.00, 5.01, 4.12, 0.00, 0.00, 0.00, -0.89, 0.00, -2.31, 0.00, 0.00, 0.00, 0.00)
 
 # Check the coefficients
-print(beta,2)
+#print(beta,2)
 
 # Covariance matrix
 d <- length(beta)
@@ -45,29 +46,33 @@ jags_data <- list(Y = y,
                   N = nobs)
 
 NORM_Bin <-" model{
-# Diffuse normal priors for predictors
-tauBeta <- pow(sdBeta,-2);
-sdBeta ~ dgamma(0.01,0.01)
-PInd <- 0.2
-for (i in 1:K){
-Ind[i] ˜ dbern(PInd)
-betaT[i] ˜ dnorm(0,tauBeta)
-beta[i] <- Ind[i]*betaT[i]
-}# Uniform prior for standard deviation
-tau <- pow(sigma, -2) # precision
-sigma ~ dgamma(0.01,0.01) # standard deviation
-# Likelihood function
-for (i in 1:N){
-Y[i]˜dnorm(mu[i],tau)
-mu[i] <- eta[i]
-eta[i] <- inprod(beta[], X[i,])
-}
+    # Diffuse normal priors for predictors
+    tauBeta <- pow(sdBeta,-2);
+    sdBeta ~ dgamma(0.01,0.01)
+
+    PInd <- 0.2
+    for (i in 1:K){
+        Ind[i] ~ dbern(PInd)
+        betaT[i] ~ dnorm(0,tauBeta)
+        beta[i] <- Ind[i]*betaT[i]
+    }
+    # Uniform prior for standard deviation
+    tau <- pow(sigma, -2) # precision
+    sigma ~ dgamma(0.01,0.01) # standard deviation
+
+    # Likelihood function
+    for (i in 1:N){
+        Y[i] ~ dnorm(mu[i],tau)
+        mu[i] <- eta[i]
+        eta[i] <- inprod(beta[], X[i,])
+    }
 }"
 
 # Determine initial values
 inits <- function () {
-  list(beta = rnorm(K, 0, 0.01))
+  list(betaT = rnorm(K, 0, 0.01))
 }
+
 # Parameters to display and save
 params <- c("beta", "sigma")
 
@@ -75,11 +80,13 @@ params <- c("beta", "sigma")
 NORM_fit <- jags(data = jags_data,
                  inits = inits,
                  parameters = params,
-                 model = textConnection(NORM),
+                 model = textConnection(NORM_Bin),
                  n.chains = 3,
                  n.iter = 5000,
                  n.thin = 1,
                  n.burnin = 2500)
+
+print(NORM_fit, intervals=c(0.025, 0.975), digits=3)
 
 require(mcmcplots)
 

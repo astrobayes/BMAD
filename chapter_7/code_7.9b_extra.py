@@ -29,14 +29,14 @@ def ztp(N, lambda_):
 np.random.seed(141)                                   # set seed to replicate example
 nobs= 750                                             # number of obs in model 
 
-x1 = uniform.rvs(size=nobs)
+x1 = uniform.rvs(size=nobs, loc=-0.5, scale=3.0)
 
-xb = 1.0 + 4.0 * x1                                   # linear predictor, xb
+xb = 0.75 + 1.5 * x1                                   # linear predictor, xb
 exb = np.exp(xb)       
 poy = ztp(nobs, exb)
 
 
-xc = -1.0 + 3.5 * x1                                  # construct filter
+xc = -2.0 + 4.5 * x1                                  # construct filter
 pi = 1.0/(1.0 + np.exp(xc))
 bern = [bernoulli.rvs(1-pi[i]) for i in range(nobs)]
 
@@ -72,11 +72,15 @@ parameters{
 }
 transformed parameters{
     vector[N] mu;
-    vector[N] u;
-
+    vector[N] Pi;
+    real temp;
+ 
     mu = exp(Xc * beta);
-    
-    for (i in 1:N) u[i] = 1.0/(1.0 + alpha * mu[i]);
+
+    for (i in 1:N) {
+        temp = sum(Xb * gamma);
+        Pi[i] = inv_logit(temp);
+    }
 }
 model{
     vector[N] loglike;
@@ -86,17 +90,14 @@ model{
         gamma[i] ~ normal(0, 100);
     }
     for (i in 1:N){
-       loglike[i] = (1.0/alpha)*log(mu[i]) + Y[i]*log(1-mu[i]) 
-                    +lgamma(Y[i]+1.0/alpha)-lgamma(1.0/alpha)
-                    -lgamma(Y[i]+1)-log(1-pow(u[i], alpha)); }
-
-    target += loglike;
+       (Y[i] == 0) ~ bernoulli(1-Pi[i]);
+       if (Y[i] > 0) Y[i] ~ neg_binomial(mu[i], alpha/(1 + alpha)) T[1,]; }
 }
 """
 
 
 # Run mcmc
-fit = pystan.stan(model_code=stan_code, data=mydata, iter=7000, chains=3,
+fit = pystan.stan(model_code=stan_code, data=mydata, iter=6000, chains=3,
                   warmup=4000, n_jobs=3)
 
 ############### Output

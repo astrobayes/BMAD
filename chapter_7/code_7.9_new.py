@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 7.9 new - Bayesian Poisson-logit hurdle model in Python using Stan
+# Code 7.8 - Bayesian Poisson-logit hurdle model in Python using Stan
 # 1 response (y) and 1 explanatory variable (x1)
 #
 # discussion of alternative forms at
@@ -29,14 +29,14 @@ def ztp(N, lambda_):
 np.random.seed(141)                                   # set seed to replicate example
 nobs= 750                                             # number of obs in model 
 
-x1 = uniform.rvs(size=nobs)
+x1 = uniform.rvs(size=nobs, loc=-0.5, scale=3.0)
 
-xb = 1.0 + 4.0 * x1                                   # linear predictor, xb
+xb = 0.75 + 1.5 * x1                                   # linear predictor, xb
 exb = np.exp(xb)       
 poy = ztp(nobs, exb)
 
 
-xc = -1.0 + 3.5 * x1                                  # construct filter
+xc = -2.0 + 4.5 * x1                                  # construct filter
 pi = 1.0/(1.0 + np.exp(xc))
 bern = [bernoulli.rvs(1-pi[i]) for i in range(nobs)]
 
@@ -73,21 +73,45 @@ parameters{
 transformed parameters{
     vector[N] mu;
     vector[N] Pi;
+    vector[N] temp;
+    vector[N] u;
 
     mu = exp(Xc * beta);
-    for (i in 1:N) Pi[i] = inv_logit(Xb[i] * gamma);
+    temp = Xb * gamma;
+    for (i in 1:N) {
+        Pi[i] = inv_logit(temp[i]);
+        u[i] = 1.0/(1.0 + alpha * mu[i]);
+    }
 }
 model{
-    for (i in 1:N) {
-        (Y[i] == 0) ~ bernoulli(1-Pi[i]);
-        if (Y[i] > 0) Y[i] ~ neg_binomial(mu[i], alpha) T[1,];
+    vector[N] LogTrunNB;
+    vector[N] z;
+    vector[N] l1;
+    vector[N] l2;
+    vector[N] ll;
+
+    for (i in 1:Kc){
+        beta[i] ~ normal(0, 100);
+        gamma[i] ~ normal(0, 100);
     }
+    for (i in 1:N) {
+        LogTrunNB[i] = (1.0/alpha) * log(u[i]) + Y[i] * log(1 - u[i]) + 
+                       lgamma(Y[i] + 1.0/alpha) - lgamma(1.0/alpha) - 
+                       lgamma(Y[i] + 1) - log(1 - pow(u[i],1.0/alpha));
+
+        z[i] = step(Y[i] - 0.0001);
+        l1[i] = (1 - z[i]) * log(1 - Pi[i]);
+        l2[i] = z[i] * (log(Pi[i]) + LogTrunNB[i]);
+        ll[i] = l1[i] + l2[i];
+    }
+
+    target += ll;
 }
 """
 
 
 # Run mcmc
-fit = pystan.stan(model_code=stan_code, data=mydata, iter=7000, chains=3,
+fit = pystan.stan(model_code=stan_code, data=mydata, iter=6000, chains=3,
                   warmup=4000, n_jobs=3)
 
 ############### Output
