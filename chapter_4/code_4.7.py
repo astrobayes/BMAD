@@ -10,7 +10,6 @@
 import numpy as np
 import statsmodels.api as sm
 import pystan
-
 from scipy.stats import uniform, norm
 
 # Data
