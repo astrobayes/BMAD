@@ -66,7 +66,7 @@ model{
 
 # Run mcmc
 fit = pystan.stan(model_code=stan_gamma, data=mydata, iter=7000, chains=3,
-                  warmup=6000, n_jobs=4)
+                  warmup=6000, n_jobs=3)
 
 ############### Output
 nlines = 9                                   # number of lines in screen output
