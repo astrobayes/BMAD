@@ -66,7 +66,7 @@ print(normfit, intervals = c(0.025, 0.975), digits = 2)
 
 
 # Plot the chains to assess mixing
-source("CH-Figures.R")
+source("https://raw.githubusercontent.com/astrobayes/BMAD/master/auxiliar_functions/CH-Figures.R")
 out <- normfit$BUGSoutput
 MyBUGSChains(out,c(uNames("beta",K),"sigma"))
 
