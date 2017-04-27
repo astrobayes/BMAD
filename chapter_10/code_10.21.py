@@ -1,18 +1,23 @@
-# From Bayesian Models for Astrophysical Data 
+# Adaptade from from Bayesian Models for Astrophysical Data 
 # by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
 #
 # Chapter 8 - Astronomical Applications 
 #
-# Statistical Model: Hurdle model in Python using Stan
+# Statistical Model: Gaussian regression in R using Stan
+#                    example using ODE
 #
-# Astronomy case: Relationship between stellar and dark matter halo mass
-#                 inspired on 
-#                 de Souza et al., 2015, Astronomy & Computing 12, p. 21-32
+# Astronomy case: Cosmological parameters inference from 
+#                 type Ia supernovae data 
 #
-# 1 response variable (Y - stellar mass)
-# 1 explanatory variable (X - dark matter halo mass)
+# Data: JLA sample, Betoule et al., 2014  
+# http://supernovae.in2p3.fr/sdss_snls_jla/ReadMe.html
 #
-# Data from: Biffi & Maio, 2013, MNRAS 436 (2), p.1621
+# 1 response (obsy - observed magnitude)
+# 5 explanatory variable (redshift - redshift,
+#                         ObsMag   - apparent magnitude,
+#                         x1       - stretch,
+#                         color    - color,
+#                         hmass    - host mass)
 
 import numpy as np
 import pandas as pd
@@ -20,7 +25,7 @@ import pystan
 import statsmodels.api as sm
 
 ############### Data
-path_to_data = ('../data/Section_10p9/MstarZSFR.csv')
+path_to_data = ('..../data/jla_lcparams.csv')
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))

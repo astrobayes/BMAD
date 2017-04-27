@@ -62,7 +62,7 @@ model{
     mu = exp(X * beta);
 
     # likelihood
-    for (i in 1:N) Y[i] ~ poisson(mu[i]) T[0,];
+    for (i in 1:N) Y[i] ~ poisson(mu[i]) T[1,];
 }
 """
 

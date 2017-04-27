@@ -124,7 +124,7 @@ parameters{
       real Mint;                    // intrinsic magnitude
       real deltaM;
       real<lower=0> sigint;         // magnitude dispersion
-      real<lower=-2, upper=0> w;                       // dark matter equation of state parameter
+      real<lower=-2, upper=0> w;    // dark matter equation of state parameter
 }
 transformed parameters{
       real DC[nobs,1];                        // co-moving distance 

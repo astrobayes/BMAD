@@ -44,7 +44,7 @@ mydata['X'] = M - 1.0
 mydata['K'] = mydata['X'].shape[1]
 mydata['Y'] = y
 mydata['N'] = nobs
-mydata['PInd'] = 0.2
+mydata['Ind'] = bernoulli.rvs(0.2, size=nvar)
 
 stan_model = '''
 data{
@@ -52,7 +52,7 @@ data{
     int<lower=0> K;
     matrix[N, K] X;
     vector[N] Y;
-    real PInd;
+    int Ind[K];
 }
 parameters{
     vector[K] beta;
@@ -69,13 +69,11 @@ transformed parameters{
     tauBeta = pow(sdBeta, 2);
 }
 model{
-    int Ind;
 
     sdBeta ~ gamma(0.01, 0.01);
 
     for (i in 1:K){
-        Ind ~ bernoulli(PInd);
-        if (Ind > 0) beta[i] ~ normal(0, tauBeta);
+        if (Ind[i] > 0) beta[i] ~ normal(0, tauBeta);
     }
  
     sigma ~  gamma(0.01, 0.01);

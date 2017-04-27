@@ -17,7 +17,7 @@ import statsmodels.api as sm
 from scipy.stats import uniform, bernoulli, poisson
 
 def ztp(N, lambda_):
-
+    """Zero truncated Poisson distribution"""
     temp = [poisson.pmf(0, item) for item in lambda_]
     p = [uniform.rvs(loc=item, scale=1-item) for item in temp]
     ztp = [int(poisson.ppf(p[i], lambda_[i])) for i in range(len(p))]
