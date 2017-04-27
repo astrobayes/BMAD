@@ -4,8 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 4.9 - Normal linear model in R using JAGS and 
-#            ignoring errors in measurements
+# Code 4.8 - Synthetic normal data in R with errors in measurements
 
 require(R2jags)
 
@@ -27,6 +26,10 @@ sdobsy <- 2.5
 erry <- rnorm(nobs, 0, sdobsy)
 truey <- rnorm(nobs,beta1 + beta2*truex,sdy)
 obsy <- truey + erry
+
+# Code 4.9 - Normal linear model in R using JAGS and 
+#            ignoring errors in measurements
+
 
 K <- 2
 model.data <- list(obsy = obsy,
