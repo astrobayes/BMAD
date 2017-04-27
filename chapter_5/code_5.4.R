@@ -52,7 +52,7 @@ LN <- jags(data = model_data,
 print(LN, intervals=c(0.025, 0.975), digits=3)
 
 # plot
-source("CH-Figures.R")
+source("https://raw.githubusercontent.com/astrobayes/BMAD/master/auxiliar_functions/CH-Figures.R")
 
 out <- LN$BUGSoutput
 MyBUGSHist(out,c(uNames("beta",K),"sigma"))
