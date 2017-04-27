@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 4.7 - Multivariate normal linear model in Python using STAN
+# Code 4.7 - Multivariate normal linear model in Python using Stan
 # 1 response (y) and 2 explanatory variables (x1, x2)
 
 import numpy as np
