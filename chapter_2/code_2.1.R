@@ -8,7 +8,7 @@
 
 
 # Data
-Y <- c(13,15,9,17,8,5,19,23,10,7,10,6)         # continuous response variable
+y <- c(13,15,9,17,8,5,19,23,10,7,10,6)         # continuous response variable
 x1 <- c(1,1,1,1,1,1,0,0,0,0,0,0)               # binary predictor
 x2 <- c( 1,1,1,1,2,2,2,2,3,3,3,3)              # categorical predictor
 
