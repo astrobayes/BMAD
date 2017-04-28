@@ -4,8 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# from Code 6.9 - Synthetic negative binomial data and model in R
-
+# Data from Code 6.9 
 library(MASS)
 
 set.seed(141)
