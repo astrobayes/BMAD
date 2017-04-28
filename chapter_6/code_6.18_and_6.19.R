@@ -9,7 +9,7 @@
 require(MASS)
 require(R2jags)
 
-source("rgp.R")                      # or wherever you stored the file
+source("https://github.com/astrobayes/BMAD/blob/master/auxiliar_functions/rgp.R")    # or wherever you stored the file
 
 set.seed(160)
 nobs <- 1000
