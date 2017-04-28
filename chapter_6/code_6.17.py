@@ -6,8 +6,7 @@
 #
 # Code 6.17 - Negative binomial model in Python using Stan
 # 1 response (nby) and 2 explanatory variables (x1, x2)
-#
-# useful link: http://bebi103.caltech.edu/2015/tutorials/r7_pymc3.html
+
 
 import numpy as np
 import pystan 
