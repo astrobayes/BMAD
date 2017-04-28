@@ -4,8 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-#  from Code 6.2 Synthetic Poisson data and model in R: 
-#               binary and continuous predictors
+#  Data from Code 6.2
 
 set.seed(18472)
 nobs <- 750
