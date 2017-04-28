@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 5.33 - Explicitly given beta–binomial data in R
+# Data from Code 5.33
 
 y <- c(6,11,9,13,17,21,8,10,15,19,7,12)
 m <- c(45,54,39,47,29,44,36,57,62,55,66,48)
