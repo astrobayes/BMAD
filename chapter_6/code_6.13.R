@@ -77,12 +77,3 @@ NB3 <- jags(data = model.data,
             n.iter = 5000)
 
 print(NB3, intervals=c(0.025, 0.975), digits=3)
-
-# plot
-source("CH-Figures.R")
-
-out <- NB3$BUGSoutput
-MyBUGSChains(out,c(uNames("beta",K),"alpha"))
-
-out <- NB3$BUGSoutput
-MyBUGSHist(out,c(uNames("beta",K),"alpha"))
