@@ -79,10 +79,3 @@ LOGT <- jags(data = model.data,
              n.iter = 10000)
 
 print(LOGT, intervals=c(0.025, 0.975), digits=3)
-
-# plot
-source("CH-Figures.R")
-
-out <- LOGT$BUGSoutput
-MyBUGSHist(out,c(uNames("beta",K),"AIC","BIC","LogL"))
-MyBUGSChains(out,c(uNames("beta",K),"AIC","BIC","LogL"))
