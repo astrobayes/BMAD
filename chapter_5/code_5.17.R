@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-#  5.15 - Synthetic data from logistic model in R
+# Data from code 5.15
 
 set.seed(13979)
 nobs <- 5000
