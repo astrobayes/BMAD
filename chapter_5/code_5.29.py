@@ -31,35 +31,3 @@ mydata['N'] = len(y)
 mydata['Y'] = y
 mydata['m'] = m
 
-# Fit
-stan_code = """
-data{
-    int<lower=0> N;
-    int<lower=0> K;
-    matrix[N, K] X;
-    int Y[N];
-    int m[N];
-}
-parameters{
-    vector[K] beta;
-}
-transformed parameters{
-    vector[N] eta;
-    vector[N] p;
-    eta = X * beta;
-    for (i in 1:N) p[i] = inv_logit(eta[i]);
-}
-model{
-    Y ~ binomial(m, p);
-}
-"""
-
-fit = pystan.stan(model_code=stan_code, data=mydata, iter=5000, chains=3,
-                  warmup=3000, n_jobs=3)
-
-# Output
-nlines = 9
-
-output = str(fit).split('\n')
-for item in output[:nlines]:
-    print(item)
