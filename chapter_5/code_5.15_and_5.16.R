@@ -26,6 +26,3 @@ myL <- MCMClogit(by ~ x1 + x2,
                  data = logitmod)
 
 summary(myL)
-
-
-plot(myL)                             # Produces figure
