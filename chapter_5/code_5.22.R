@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 5.20 - Synthetic probit data and model generated in R
+# data from Code 5.20 
 
 set.seed(135)
 nobs <- 1:2000
