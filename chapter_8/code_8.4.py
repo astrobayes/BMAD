@@ -80,7 +80,7 @@ transformed parameters{
     }
 }
 model{    
-    sigma_plot ~ cauchy(0, 5);
+    sigma_plot ~ cauchy(0, 25);
     sigma_eps ~ cauchy(0, 25);
 
     beta ~ multi_normal(b0, B0);
