@@ -1,3 +1,14 @@
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
+
+# Code 7.10 - Zero-altered negative binomial (ZANB) or NB hurdle model in 
+#             Python using Stan
+
+
+
 import numpy as np
 import pystan
 from scipy.stats import bernoulli, uniform, poisson
