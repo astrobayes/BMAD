@@ -4,100 +4,98 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-set.seed(33559)
 
-# Sample size
-nobs <- 750
+# Data from code 7.6
+rztp <- function(N, lambda){
+  p <- runif(N, dpois(0, lambda),1)
+  ztp <- qpois(p, lambda)
+  return(ztp)
+}
 
-# Generate predictors, design matrix
-x1 <- runif(nobs,0,4)
-xc <- -1 + 0.75*x1
-exc <- exp(xc)
 
-phi <- 0.066
-r <- 1/phi
-y <- rgamma(nobs,shape=r, rate=r/exc)
-LG <- data.frame(y, x1)
+nobs <- 1000
+x1 <- runif(nobs,-0.5,2.5)
+xb <- 0.75 + 1.5*x1
 
-# Construct filter
-xb <- -2 + 1.5*x1
-pi <- 1/(1+exp(-(xb)))
-bern <- rbinom(nobs,size=1, prob=pi)
+exb <- exp(xb)
+poy <- rztp(nobs, exb)
+pdata <- data.frame(poy, x1)
 
-# Add structural zeros
-LG$y <- LG$y*bern
+xc <- -3 + 4.5*x1
 
-# Code 7.9 - Bayesian log-gamma–logit hurdle model in R using JAGS
-library(R2jags)
+pi <- 1/(1+exp((xc)))
+bern <- rbinom(nobs,size =1, prob=1-pi)
 
-Xc <- model.matrix(~ 1 + x1, data=LG)
-Xb <- model.matrix(~ 1 + x1, data=LG)
+pdata$poy <- pdata$poy*bern
+
+
+# Code 7.9 - Zero-altered negative binomial (ZANB) or 
+#           NB hurdle model in R using JAGS
+
+require(R2jags)
+
+Xc <- model.matrix(~ 1 + x1, data = pdata)
+Xb <- model.matrix(~ 1 + x1, data = pdata)
 Kc <- ncol(Xc)
 Kb <- ncol(Xb)
 
 model.data <- list(
-  Y = LG$y, # response
-  Xc = Xc, # covariates from gamma component
-  Xb = Xb, # covariates from binary component
-  Kc = Kc, # number of betas
-  Kb = Kb, # number of gammas
-  N = nrow(LG), # sample size
-  Zeros = rep(0, nrow(LG)))
+  Y = pdata$poy,
+  Xc = Xc,
+  Xb = Xb,
+  Kc = Kc,                                                        # number of betas − count
+  Kb = Kb,                                                        # number of gammas − binary
+  N = nrow(pdata),
+  Zeros = rep(0, nrow(pdata)))
 
-load.module('glm')
-
-sink("ZAGGLM.txt")
+sink("NBH.txt")
 
 cat("
-model{
-    # Priors for both beta and gamma components
-    for (i in 1:Kc) {beta[i] ~ dnorm(0, 0.0001)}
-    for (i in 1:Kb) {gamma[i] ~ dnorm(0, 0.0001)}
-
-    # Prior for scale parameter, r
-    r ~ dgamma(1e-2, 1e-2)
-
-    # Likelihood using the zero trick
+    model{
+    # Priors beta and gamma
+    for (i in 1:Kc) {beta[i]  ~  dnorm(0, 0.0001)}
+    for (i in 1:Kb) {gamma[i]  ~  dnorm(0, 0.0001)}
+    
+    # Prior for alpha
+    alpha ~ dunif(0.001, 5)
+    
+    # Likelihood using zero trick
     C <- 10000
-
+    
     for (i in 1:N) {
-        Zeros[i] ~ dpois(-ll[i] + C)
-
-        # gamma log-likelihood
-        lg1[i] <- - loggam(r) + r * log(r / mu[i])
-        lg2[i] <- (r - 1) * log(Y[i]) - (Y[i] * r) / mu[i]
-        LG[i] <- lg1[i] + lg2[i]
-        z[i] <- step(Y[i] - 0.0001)
-        l1[i] <- (1 - z[i]) * log(1 - Pi[i])
-        l2[i] <- z[i] * ( log(Pi[i]) +LG[i])
-        ll[i] <- l1[i] + l2[i]
-        log(mu[i]) <- inprod(beta[], Xc[i,])
-        logit(Pi[i]) <- inprod(gamma[], Xb[i,])
+    Zeros[i]  ~  dpois(-ll[i] + C)
+    LogTruncNB[i] <- 1/alpha * log(u[i])  +
+                     Y[i] * log(1 - u[i]) + loggam(Y[i] + 1/alpha) -
+                     loggam(1/alpha) - loggam(Y[i] + 1) -
+                     log(1 - (1 + alpha * mu[i])^(-1/alpha))
+    
+    z[i] <- step(Y[i] - 0.0001)
+    l1[i] <- (1 - z[i]) * log(1 - Pi[i])
+    l2[i] <- z[i] * (log(Pi[i]) + LogTruncNB[i])
+    ll[i] <- l1[i] + l2[i]
+    u[i] <- 1/(1 + alpha * mu[i])
+    log(mu[i]) <- inprod(beta[], Xc[i,])
+    logit(Pi[i]) <- inprod(gamma[], Xb[i,])
     }
-
-    phi <- 1/r
     }", fill = TRUE)
-
+ 
 sink()
 
-# Initial parameter values
 inits <- function () {
   list(beta = rnorm(Kc, 0, 0.1),
        gamma = rnorm(Kb, 0, 0.1),
-       r = runif(1, 0,100) )}
+       numS = rnorm(1, 0, 25),
+       denomS = rnorm(1, 0, 1))}
 
-# Parameter values to be displayed in output
-params <- c("beta", "gamma", "phi")
+params <- c("beta", "gamma", "alpha")
 
-# MCMC sampling
-ZAG <- jags(data = model.data,
-            inits = inits,
-            parameters = params,
-            model = "ZAGGLM.txt",
-            n.thin = 1,
-            n.chains = 3,
-            n.burnin = 2500,
-            n.iter = 5000)
+ZANB <- jags(data = model.data,
+             inits = inits,
+             parameters = params,
+             model = "NBH.txt",
+             n.thin = 1,
+             n.chains = 3,
+             n.burnin = 4000,
+             n.iter = 6000)
 
-# Model results
-print(ZAG, intervals = c(0.025, 0.975), digits=3)
+print(ZANB, intervals=c(0.025, 0.975), digits=3)
