@@ -9,7 +9,7 @@
 
 require(R2jags)
 # Data
-path_to_data = "../data/Section_10p1/M_sigma.csv"
+path_to_data = "https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p1/M_sigma.csv"
 
 # Read data
 MS<-read.csv(path_to_data,header = T)
