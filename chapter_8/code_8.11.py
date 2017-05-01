@@ -4,82 +4,72 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 8.11b Random intercept poisson model in Python using Stan
+# Code 8.9b Random intercept binomial logistic model in Python using Stan
 
 
 import numpy as np
-import pystan
 import statsmodels.api as sm
+import pystan 
 
-from scipy.stats import norm, uniform, poisson
+from scipy.stats import norm, uniform, bernoulli
 
-# Data
-np.random.seed(1656)                 # set seed to replicate example
-N = 2000                             # number of obs in model 
-NGroups = 10
-
-x1 = uniform.rvs(size=N)
-x2 = uniform.rvs(size=N)
-
-Groups = np.array([200 * [i] for i in range(NGroups)]).flatten()
-a = norm.rvs(loc=0, scale=0.5, size=NGroups)
-eta = 1 + 0.2 * x1 - 0.75 * x2 + a[list(Groups)]
-mu = np.exp(eta)
-
-y = poisson.rvs(mu)
-
+y = [6,11,9,13,17,21,8,10,15,19,7,12,8,5,13,17,5,12,9,10]
+m = [45,54,39,47,29,44,36,57,62,55,66,48,49,39,28,35,39,43,50,36]
+x1 = [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]
+x2 = [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]
+Groups = range(len(y))
 
 X = sm.add_constant(np.column_stack((x1,x2)))
 K = X.shape[1]
-Nre = NGroups
-
 
 model_data = {}
-model_data['Y'] = y
-model_data['X'] = X                              
-model_data['K'] = K
-model_data['N'] = N
-model_data['NGroups'] = NGroups
-model_data['re'] = Groups
+model_data['Y'] = y                             # response
+model_data['X'] = X                             # covariates
+model_data['K'] = K                             # num. betas
+model_data['m'] = m                             # binomial denominator
+model_data['N'] = len(y)                        # sample size
+model_data['re'] = Groups                       # random effects
 model_data['b0'] = np.repeat(0, K) 
 model_data['B0'] = np.diag(np.repeat(100, K))
-model_data['a0'] = np.repeat(0, Nre)
-model_data['A0'] = np.diag(np.repeat(1, Nre))
+model_data['a0'] = np.repeat(0, len(y))
+model_data['A0'] = np.diag(np.repeat(1, len(y)))
+
+
 # Fit
 stan_code = """
 data{
     int<lower=0> N;
     int<lower=0> K;
-    int<lower=0> NGroups;
     matrix[N, K] X;
-    int Y[N];
+    int<lower=0> Y[N];
     int re[N];
+    int m[N];
     vector[K] b0;
     matrix[K, K] B0;
-    vector[NGroups] a0;
-    matrix[NGroups, NGroups] A0;
+    vector[N] a0;
+    matrix[N, N] A0;
 }
 parameters{
     vector[K] beta;
-    vector[NGroups] a;
-    real<lower=0, upper=10> sigma_re;
+    vector[N] a;
+    real<lower=0> sigma;
 }
 transformed parameters{
     vector[N] eta;
-    vector[N] mu; 
+    vector[N] p; 
  
     eta = X * beta;
     for (i in 1:N){ 
-        mu[i] = exp(eta[i] + a[re[i]+1]);
+        p[i] = eta[i] + a[re[i]+1];
     }
 }
 model{    
-    sigma_re ~ cauchy(0, 25);
+    sigma ~ cauchy(0, 25);
 
     beta ~ multi_normal(b0, B0);
-    a ~ multi_normal(a0, sigma_re * A0);
+    a ~ multi_normal(a0, sigma * A0);
 
-    Y ~ poisson(mu);  
+    Y ~ binomial_logit(m, p);  
 }
 """
 
@@ -87,10 +77,9 @@ fit = pystan.stan(model_code=stan_code, data=model_data, iter=5000, chains=3, th
                   warmup=4000, n_jobs=3)
 
 # Output
-nlines = 19                                  # number of lines in screen output
+nlines = 29                                  # number of lines in screen output
 
 output = str(fit).split('\n')
-
 for item in output[:nlines]:
     print(item)  
 
