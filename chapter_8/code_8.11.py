@@ -4,7 +4,7 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Code 8.9b Random intercept binomial logistic model in Python using Stan
+# Code 8.11 Random intercept binomial logistic model in Python using Stan
 
 
 import numpy as np
