@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 import pystan 
 
-path_to_data = '../data/Section_10p1/M_sigma.csv'
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p1/M_sigma.csv'
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -60,7 +60,7 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=15000, chains=3,
                   warmup=5000, thin=10, n_jobs=3)
 
-############### Output
+# Output
 nlines = 8                                  # number of lines in screen output
 
 output = str(fit).split('\n')
