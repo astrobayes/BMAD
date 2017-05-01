@@ -84,7 +84,7 @@ model{
     sigma_eps ~ cauchy(0, 25);
 
     beta ~ multi_normal(b0, B0);
-    a ~ multi_normal(a0, sigma_eps * A0);
+    a ~ multi_normal(a0, sigma_plot * A0);
 
     Y ~ normal(mu, sigma_eps);  
 }
