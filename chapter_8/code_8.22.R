@@ -30,7 +30,7 @@ nbri <- data.frame(
 )
 
 
-# Code 8.16 - Bayesian random intercept negative binomial in R using JAGS.
+# Code 8.22 - Bayesian random intercept negative binomial in R using JAGS.
 
 library(R2jags)
 
