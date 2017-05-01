@@ -79,14 +79,16 @@ inits <- function () {
          a = rnorm(Nre, 0, 1),
          num = runif(1, 0, 25),
          denom = runif(1, 0, 1))}
-         params <- c("beta", "a", "sigma.re", "tau.re")
-         LRI0 <- jags(data = model.data,
-         inits = inits,
-         parameters = params,
-         model.file = "GLMM.txt",
-         n.thin = 10,
-         n.chains = 3,
-         n.burnin = 5000,
-         n.iter = 7000)
+
+params <- c("beta", "a", "sigma.re", "tau.re")
+         
+LRI0 <- jags(data = model.data,
+             inits = inits,
+             parameters = params,
+             model.file = "GLMM.txt",
+             n.thin = 10,
+             n.chains = 3,
+             n.burnin = 5000,
+             n.iter = 7000)
          
 print(LRI0, intervals=c(0.025, 0.975), digits=3)
