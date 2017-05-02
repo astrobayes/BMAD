@@ -1,7 +1,12 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.4 - Gaussian linear mixed model, in Python using Stan, for modeling
+#             the relationship between type Ia supernovae host galaxy mass 
+#             and Hubble residuals.
 #
 # Statistical Model: Gaussian mixed model considering errors in variables
 #                    in Python using Stan
@@ -19,7 +24,7 @@ import pandas as pd
 import pystan 
 
 # Data
-path_to_data = '../data/Section_10p2/HR.csv'
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p2/HR.csv'
 data_frame = dict(pd.read_csv(path_to_data))
 
 # prepare data for Stan

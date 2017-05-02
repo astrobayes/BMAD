@@ -1,7 +1,11 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.2 Normal linear model, in Python using Stan, for assessing the relationship
+#           between central black hole mass and bulge velocity dispersion
 #
 # Statistical Model: Gaussian regression considering errors in variables
 #                    in Python using Stan
