@@ -1,7 +1,8 @@
 # From Bayesian Models for Astrophysical Data 
 # by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.9 Lognormal model in Python using Stan to describe the 
+#           initial mass function (IMF)
 #
 # Statistical Model: Lognormal distribution in Python using Stan
 #
@@ -21,7 +22,7 @@ import pystan
 import statsmodels.api as sm
 
 # Data
-path_to_data = '../data/Section_10p4/NGC6611.csv'
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p4/NGC6611.csv'
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -55,7 +56,7 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=5000, chains=3,
                   warmup=2500, thin=1, n_jobs=3)
 
-############### Output
+# Output
 print(fit)
 
 # plot chains and posteriors
