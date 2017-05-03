@@ -8,6 +8,7 @@
 #              size and the fraction of red spirals
 
 require(R2jags)
+
 # Data
 path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p6/Red_spirals.csv'
 
