@@ -1,5 +1,8 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
 #Code 10.6 Multivariate Gaussian mixed model in Python, using Stan, 
 #          for accessing the relationship between luminosity, period, 
