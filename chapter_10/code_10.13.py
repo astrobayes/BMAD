@@ -1,7 +1,11 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.13 Bernoulli model in Python using Stan, for assessing the 
+#            relationship between bulge size and the fraction of red spirals.
 #
 # Statistical Model: Bernoulli model in Python using Stan
 #
@@ -21,7 +25,7 @@ import pystan
 import statsmodels.api as sm
 
 # Data
-path_to_data = '../data/Section_10p6/Red_spirals.csv'
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p6/Red_spirals.csv'
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -35,7 +39,6 @@ data['nobs'] = data['X'].shape[0]
 data['K'] = data['X'].shape[1]
 
 # Fit
-# Stan  model
 stan_code="""
 data{
     int<lower=0> nobs;                # number of data points
@@ -58,5 +61,5 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=6000, chains=3,
                   warmup=3000, thin=1, n_jobs=3)
 
-############### Output
+# Output
 print(fit)
