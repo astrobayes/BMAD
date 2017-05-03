@@ -1,10 +1,12 @@
 # From Bayesian Models for Astrophysical Data 
 # by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
 #
-# Chapter 8 - Astronomical Applications 
+#Code 10.6 Multivariate Gaussian mixed model in Python, using Stan, 
+#          for accessing the relationship between luminosity, period, 
+#          and color in early-type contact binaries.
 #
 # Statistical Model: Multivariate Gaussian regression 
-#                    in Python using Stan
+#                    
 #
 # Astronomy case: Relation between period, color and luminosity 
 #                 for early type contact binaries
@@ -21,7 +23,7 @@ import pystan
 import statsmodels.api as sm
 
 # Data
-path_to_data = '../data/Section_10p3/PLC.csv'
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p3/PLC.csv'
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -38,7 +40,6 @@ data['M'] = 3
 data['K'] = data['M'] - 1
 
 # Fit
-# Stan  Multivariate Gaussian
 stan_code="""
 data{
     int<lower=0> nobs;                # number of data points
@@ -84,7 +85,7 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=5000, chains=3,
                   warmup=2500, thin=1, n_jobs=3)
 
-############### Output
+# Output
 nlines = 13                                  # number of lines in screen output
 
 output = str(fit).split('\n')
