@@ -52,8 +52,8 @@ inits <- function () {
 }
 
 # Identify parameters
-# Include Yx only if you intend to generate plots
-params <- c("sd", "phi", "Yx")
+# Include "Yx" in the list bellow if you intend to generate plots
+params <- c("sd", "phi")
 
 # Run mcmc
 jagsfit <- jags(data = sun_data,
