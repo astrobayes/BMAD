@@ -37,8 +37,7 @@ data['Y'] = [int(round(item)) for item in data_frame['nspots']]
 data['nobs'] = len(data['Y'])
 data['K'] = 2
 
-############### Fit
-# Stan  model
+# Fit
 stan_code="""
 data{
     int<lower=0> nobs;                # number of data points
@@ -68,5 +67,5 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=7500, chains=3,
                   warmup=5000, thin=1, n_jobs=3)
 
-############### Output
+# Output
 print(fit)

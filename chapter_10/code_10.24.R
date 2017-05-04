@@ -47,7 +47,7 @@ AR1_NB<-"model{
 }"
 
 # Identify parameters
-# Include Yx in the list bellow only if interested in prediction
+# Include "Yx" in the list bellow only if interested in prediction
 params <- c("phi","theta")
 
 # Generate initial values for mcmc
