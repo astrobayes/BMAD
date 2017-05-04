@@ -1,7 +1,12 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.19 Bernoulli logit model, in Python using Stan, for assessing 
+#            the relationship between Seyfert AGN activity and 
+#            galactocentric distance
 #
 # Statistical Model: Bernoulli mixed model in Python using Stan
 #
@@ -13,15 +18,16 @@
 # 1 response variable (Y - galaxy class Seyfert - 1/AGN - 0)
 # 2 explanatory variable (x1 - M200, x2 - cluster-centric distance)
 #
-# Data from: Trevisan & Mamon, in prep
+# Data from: Trevisan, Mamon & Khosroshahi, 2017, MNRAS, 464, p.4593-4610
+#            https://github.com/COINtoolbox/LOGIT_AGNs/tree/master/data
 
 import numpy as np
 import pandas as pd
 import pystan 
 import statsmodels.api as sm
 
-############### Data
-path_to_data = '../data/Section_10p8/Seyfert.csv'
+# Data
+path_to_data = 'https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p8/Seyfert.csv'
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -40,7 +46,6 @@ data['P'] = 2
 
 
 # Fit
-# Stan  model
 stan_code="""
 data{
     int<lower=0> N;                # number of data points
@@ -80,5 +85,5 @@ model{
 fit = pystan.stan(model_code=stan_code, data=data, iter=60000, chains=3,
                   warmup=30000, thin=10, n_jobs=3)
 
-############### Output
+# Output
 print(fit)
