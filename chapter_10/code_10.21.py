@@ -1,31 +1,31 @@
-# Adaptade from from Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.21 Lognormal–logit hurdle model, in Python using Stan, 
+#            for assessing the relationship between dark halo 
+#            mass and stellar mass.
 #
-# Statistical Model: Gaussian regression in R using Stan
-#                    example using ODE
+# Statistical Model: Hurdle model in Python using Stan
 #
-# Astronomy case: Cosmological parameters inference from 
-#                 type Ia supernovae data 
+# Astronomy case: Relationship between stellar and dark matter halo mass
+#                 inspired on 
+#                 de Souza et al., 2015, Astronomy & Computing 12, p. 21-32
 #
-# Data: JLA sample, Betoule et al., 2014  
-# http://supernovae.in2p3.fr/sdss_snls_jla/ReadMe.html
+# 1 response variable (Y - stellar mass)
+# 1 explanatory variable (X - dark matter halo mass)
 #
-# 1 response (obsy - observed magnitude)
-# 5 explanatory variable (redshift - redshift,
-#                         ObsMag   - apparent magnitude,
-#                         x1       - stretch,
-#                         color    - color,
-#                         hmass    - host mass)
+# Data from: Biffi & Maio, 2013, MNRAS 436 (2), p.1621
 
 import numpy as np
 import pandas as pd
 import pystan 
 import statsmodels.api as sm
 
-############### Data
-path_to_data = ('..../data/jla_lcparams.csv')
+# Data
+path_to_data = ('https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p9/MstarZSFR.csv')
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
@@ -42,8 +42,7 @@ data['Kc'] = data['Xc'].shape[1]
 data['Kb'] = data['Xb'].shape[1]
 data['N'] = data['Xc'].shape[0]
 
-############### Fit
-# Stan  model
+# Fit
 stan_code="""
 data{
     int<lower=0> N;                # number of data points
