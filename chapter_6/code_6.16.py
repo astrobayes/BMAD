@@ -13,7 +13,6 @@ import numpy as np
 import pandas
 import pylab as plt
 import pymc3 as pm
-import pystan 
 from scipy.stats import uniform, binom, nbinom
 import statsmodels.api as sm
 

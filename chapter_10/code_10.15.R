@@ -4,14 +4,12 @@
 # you are kindly asked to include the complete citation if you used this 
 # material in a publication
 
-# Data from Code 10.14 Poisson model, in R using JAGS, for modeling the relation between globular
-#            clusters population and host galaxy visual magnitude.
-
+# Data from Code 10.14
 require(R2jags)
 require(jagstools)
 
 # Data
-path_to_data = "../data/Section_10p7/GCs.csv"
+path_to_data = "https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p7/GCs.csv"
 
 # Read data
 GC_dat = read.csv(file=path_to_data,header = T,dec=".")
