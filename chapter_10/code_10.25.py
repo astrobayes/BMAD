@@ -1,7 +1,12 @@
-# From Bayesian Models for Astrophysical Data 
-# by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
+# From: Bayesian Models for Astrophysical Data, Cambridge Univ. Press
+# (c) 2017,  Joseph M. Hilbe, Rafael S. de Souza and Emille E. O. Ishida 
+# 
+# you are kindly asked to include the complete citation if you used this 
+# material in a publication
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.25 Negative binomial model (AR1) in Python using Stan, 
+#            for assessing the evolution of the number of sunspots 
+#            through the years.
 #
 # Statistical Model: Time series in Python using Stan
 #
@@ -21,7 +26,7 @@ import pystan
 import statsmodels.api as sm
 
 # Data
-path_to_data = "../data/Section_10p10/sunspot.csv"
+path_to_data = "https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p10/sunspot.csv"
 
 # read data
 data_frame = dict(pd.read_csv(path_to_data))
