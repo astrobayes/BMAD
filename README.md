@@ -11,12 +11,19 @@ The book can be purchased at [Cambridge University Press](https://www.cambridge.
 
 
 * Chapter 2: Pre-equisites  
-  - Code 2.1  - Example of linear regression in R  
-  - Code 2.3  - Example of linear regression in Python  
 
 * Chapter 3: Frequentist vs Bayesian methods  
-Code 3.1  - Basic linear model in R  
-Code 3.2  - Ordinary least squares regression in Python without formula  
-Code 3.3  - Bayesian normal linear model in R  
-Code 3.4  - Bayesian normal linear model in Python  
 
+* Chapter 4: Normal linear models  
+
+* Chapter 5: GLM part I - continuous and binomial models  
+
+* Chapter 6: GLM part II - count models  
+
+* Chapter 7: GLM part III - zero-inflated and hurdle models  
+
+* Chapter 8: Hierarchical GLMMs  
+
+* Chapter 9: Model selection  
+
+* Chapter 10: Astronomical applications  
