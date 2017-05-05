@@ -1,6 +1,6 @@
 # Bayesian models for Astrophysical data
 
-Resources for Bayesian Models for Astrophysical Data - Hilbe, de Souza and Ishida, 2017, Cambridge University Press
+Resources for **Bayesian Models for Astrophysical Data - using R, JAGS, Python and Stan** - by Hilbe, de Souza and Ishida, 2017, Cambridge University Press
 
 Complete book website: [www.astrobayes.com](www.astrobayes.com)
 
