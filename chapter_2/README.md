@@ -1,7 +1,7 @@
 ## Chapter 2: Prerequisites
 
 
-### *Don’t Panic.*  
+**Don’t Panic.**  
 *The Hitchhiker’s Guide to the Galaxy, Douglas Adams (1981)*  
 
 

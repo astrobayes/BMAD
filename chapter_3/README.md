@@ -1,6 +1,6 @@
 ## Chapter 3: Frequentist vs Bayesian methods  
 
-### *It is a capital mistake to theorize before one has data. Insensibly one  begins to twist facts to suit theories, instead of theories to suit facts.*    
+**It is a capital mistake to theorize before one has data. Insensibly one  begins to twist facts to suit theories, instead of theories to suit facts.**    
 *Sherlock Holmes, Arthur Conan Doyle (1887)*
 
 - [Code 3.1](https://github.com/astrobayes/BMAD/blob/master/chapter_3/code_3.1.R)  - Basic linear model in R
