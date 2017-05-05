@@ -1,7 +1,8 @@
 # From Bayesian Models for Astrophysical Data 
 # by Hilbe, de Souza & Ishida, 2016, Cambridge Univ. Press
 #
-# Chapter 8 - Astronomical Applications 
+# Code 10.26 Bayesian normal model for cosmological parameter 
+#            inference from type Ia supernova data in R using Stan.
 #
 # Statistical Model: Gaussian regression in R using Stan
 #                    example using ODE
@@ -27,7 +28,7 @@ library(emdbook)
 library(ggthemes)
 library(coda)
 
-############### Preparation
+# Preparation
 
 # set initial conditions
 z0 = 0                          # initial redshift
@@ -37,9 +38,8 @@ E0 = 0                          # integral(1/E) at z0
 c = 3e5                         # speed of light
 H0 = 70                         # Hubble constant
 
-############### Data
-# read data
-data <- read.table("../data/Section_10p11/jla_lcparams.txt",header=T)
+# Data
+data <- read.table("https://raw.githubusercontent.com/astrobayes/BMAD/master/data/Section_10p11/jla_lcparams.txt",header=T)
 
 # remove repeated redshift 
 data2<-data[!duplicated(data$zcmb),]
@@ -64,7 +64,7 @@ stan_data  <- list(nobs = nobs,
                    color = color,
                    hmass = hmass)
 
-############### Fit
+# Fit
 stan_model="
 functions {
      /** 
@@ -169,7 +169,5 @@ fit <- stan(model_code = stan_model,
                 warmup=7500
 )
 
-############### Output 
-
-# summary on screen
+# Output 
 print(fit,pars=c("om", "Mint","w","alpha","beta","deltaM","sigint"),intervals=c(0.025, 0.975), digits=3)
