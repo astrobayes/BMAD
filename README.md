@@ -27,3 +27,7 @@ The book can be purchased at [Cambridge University Press](https://www.cambridge.
 * [Chapter 9](https://github.com/astrobayes/BMAD/tree/master/chapter_9): Model selection  
 
 * [Chapter 10](https://github.com/astrobayes/BMAD/tree/master/chapter_10): Astronomical applications  
+
+* [Appendix A](https://github.com/astrobayes/BMAD/tree/master/appendix_A): Bayesian Modeling using INLA  
+
+* [Appendix B](https://github.com/astrobayes/BMAD/tree/master/appendix_B): Count Models with Offsets
