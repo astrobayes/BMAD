@@ -22,11 +22,6 @@
 
 
 library(rstan)
-library(mvtnorm)
-library(SDMTools)
-library(emdbook)
-library(ggthemes)
-library(coda)
 
 # Preparation
 
