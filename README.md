@@ -4,7 +4,7 @@ Resources for **Bayesian Models for Astrophysical Data - using R, JAGS, Python a
 
 Complete book website: [www.BayesianModelsForAstrophysicalData.com](https://www.bayesianmodelsforastrophysicaldata.com/)
 
-The book can be purchased at [Cambridge University Press](https://www.cambridge.org/core/books/bayesian-models-for-astrophysical-data/A521B3BB3A2E1621EE1B907E87207218)
+The book can be purchased at [Cambridge University Press](http://bit.ly/2pnqGLX)
 
 ------------------------------------------
 ## Table of Contents  ##
