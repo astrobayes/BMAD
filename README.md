@@ -30,4 +30,6 @@ The book can be purchased at [Cambridge University Press](http://bit.ly/2pnqGLX)
 
 * [Appendix A](https://github.com/astrobayes/BMAD/tree/master/appendix_A): Bayesian Modeling using INLA  
 
-* [Appendix B](https://github.com/astrobayes/BMAD/tree/master/appendix_B): Count Models with Offsets
+* [Appendix B](https://github.com/astrobayes/BMAD/tree/master/appendix_B): Count Models with Offsets  
+
+* [Erratum](https://github.com/astrobayes/BMAD/tree/master/erratum)
