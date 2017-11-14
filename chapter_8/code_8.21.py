@@ -47,7 +47,7 @@ with pm.Model() as model:
     eta = beta1 + beta2*x1 + beta3*x2 + a_param[Groups]
     
     # Define likelihood
-    y = pm.NegativeBinomial('y', mu=pm.exp(eta), alpha=alpha, observed=y)
+    y = pm.NegativeBinomial('y', mu=np.exp(eta), alpha=alpha, observed=y)
     
     # Fit
     start = pm.find_MAP()                        # Find starting value by optimization
