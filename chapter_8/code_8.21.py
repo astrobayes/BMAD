@@ -50,8 +50,8 @@ with pm.Model() as model:
     y = pm.NegativeBinomial('y', mu=np.exp(eta), alpha=alpha, observed=y)
     
     # Fit
-    start = pm.find_MAP()                        # Find starting value by optimization
-    step = pm.NUTS(state=start)                  # Initiate sampling 
+    start = pm.find_MAP()                          # Find starting value by optimization
+    step = pm.NUTS(scaling=start)                  # Initiate sampling 
     trace = pm.sample(7000, step, start=start)     
 
 # Print summary to screen

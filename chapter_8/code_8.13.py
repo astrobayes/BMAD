@@ -44,11 +44,11 @@ with pm.Model() as model:
     eta = beta1 + beta2*x1 + beta3*x2 + a_param[Groups]
     
     # Define likelihood
-    y = pm.Poisson('y', mu=pm.exp(eta), observed=y)
+    y = pm.Poisson('y', mu=np.exp(eta), observed=y)
     
     # Fit
     start = pm.find_MAP()                        # Find starting value by optimization
-    step = pm.NUTS(state=start)                  # Initiate sampling 
+    step = pm.NUTS(scaling=start)                  # Initiate sampling 
     trace = pm.sample(20000, step, start=start, progressbar=False)     
 
 # Print summary to screen
