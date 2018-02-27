@@ -2,6 +2,8 @@
 
 Resources for **Bayesian Models for Astrophysical Data - using R, JAGS, Python and Stan** - by Hilbe, de Souza and Ishida, 2017, Cambridge University Press
 
+Winner of [2018 PROSE Awards](https://proseawards.com/winners/) in the category Cosmology and Astronomy
+
 Complete book website: [www.BayesianModelsForAstrophysicalData.com](https://www.bayesianmodelsforastrophysicaldata.com/)
 
 The book can be purchased at [Cambridge University Press](http://bit.ly/2pnqGLX)
