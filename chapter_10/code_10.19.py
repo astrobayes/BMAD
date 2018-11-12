@@ -52,7 +52,7 @@ data{
     int<lower=0> K;                # number of coefficients
     int<lower=0> P;                # number of populations
     matrix[N,K] X;                 # [logM200, galactocentric distance]
-    int<lower=0, upper=1> Y[N];    # Seyfert 1/AGN 0
+    int<lower=0, upper=1> Y[N];    # Seyfert 1/SF 0
     int<lower=0, upper=1> gal[N];  # elliptical 0/spiral 1
 }
 parameters{
