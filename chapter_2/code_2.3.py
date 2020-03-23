@@ -21,7 +21,7 @@ mydata['x2'] = x2
 mydata['y'] = y
 
 # Fit using ordinary least squares
-results = smf.ols(formula='y ~ x1 + x2', data=mydata).fit()
+results = smf.OLS.from_formula(formula='y ~ x1 + x2', data=mydata).fit()
 
 # Output
 print(str(results.summary()))

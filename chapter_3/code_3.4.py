@@ -9,7 +9,7 @@
 
 import numpy as np
 from pymc3 import  Model, sample, summary, traceplot
-from pymc3.glm import glm
+from pymc3.glm import GLM
 import pylab as plt
 import pandas
 from scipy.stats import uniform, norm
@@ -30,7 +30,7 @@ y = norm.rvs(loc=xb, scale=1.0, size=nobs)    # create y as adjusted
 df = pandas.DataFrame({'x1': x1, 'y': y})     # re-write data
 
 with Model() as model_glm:
-    glm('y ~ x1', df)
+    GLM.from_formula('y ~ x1', df)
     trace = sample(5000)
 
 # Output
