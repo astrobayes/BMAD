@@ -7,6 +7,7 @@
 # Code 4.3 - Normal linear model in Python using STAN
 # 1 response (y) and 1 explanatory variable (x1)
 
+import arviz
 import numpy as np
 import statsmodels.api as sm
 import pystan
@@ -48,11 +49,15 @@ model {
 
     mu = beta0 + beta1 * x;
 
-    y ~ normal(mu, sigma);             # Likelihood function
+    y ~ normal(mu, sigma);             // Likelihood function
 }
 """
 
-fit = pystan.stan(model_code=stan_code, data=toy_data, iter=5000, chains=3, verbose=False, n_jobs=3)
+# compile model
+model = pystan.StanModel(model_code=stan_code)
+
+# perform fit
+fit = model.sampling(data=toy_data, iter=5000, chains=3, verbose=False, n_jobs=3)
 
 # Output
 nlines = 8                     # number of lines in screen output
@@ -65,6 +70,6 @@ for item in output[:nlines]:
 # Plot
 import pylab as plt
 
-fit.plot(['beta0', 'beta1', 'sigma'])
+arviz.plot_trace(fit, var_names=['beta0', 'beta1', 'sigma'])
 plt.tight_layout()
 plt.show()
