@@ -49,22 +49,25 @@ transformed parameters{
     vector[nobs] mu2;
 
     mu = x * beta;
-    mu2 = to_vector(mu);                 # normal distribution 
-                                          # does not take matrices as input
+    mu2 = to_vector(mu);                 // normal distribution 
+                                         // does not take matrices as input
 }
 model {
-    for (i in 1:k){                       # Diffuse normal priors for predictors
+    for (i in 1:k){                      // Diffuse normal priors for predictors
         beta[i] ~ normal(0.0, 100);
     }
-    sigma ~ uniform(0, 100);            # Uniform prior for standard deviation
+    sigma ~ uniform(0, 100);             // Uniform prior for standard deviation
 
-    y ~ normal(mu2, sigma);               # Likelihood function
+    y ~ normal(mu2, sigma);              // Likelihood function
 }
 """
 
-# Run mcmc
-fit = pystan.stan(model_code=stan_code, data=toy_data, iter=5000, chains=3,
-                  n_jobs=3, verbose=False)
+# Compile model
+model = pystan.StanModel(model_code=stan_code)
+
+# perform fit
+fit = model.sampling(data=toy_data, iter=5000, chains=3,
+                     n_jobs=3, verbose=False, check_hmc_diagnostics=True)
 
 # Output
 nlines = 9                                   # number of lines in screen output
