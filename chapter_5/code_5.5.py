@@ -52,9 +52,12 @@ model{
 }
 """
 
-# fit
-fit = pystan.stan(model_code=stan_lognormal, data=mydata, iter=5000, chains=3,
-                  verbose=False, n_jobs=3)
+# Compile model
+model = pystan.StanModel(model_code=stan_lognormal)
+
+# perform fit
+fit = model.sampling(data=mydata, iter=5000, chains=3,
+                     verbose=False, n_jobs=3, check_hmc_diagnostics=True)
 
 
 ############### Output

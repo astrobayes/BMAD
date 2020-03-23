@@ -77,10 +77,10 @@ transformed parameters{
     }
 }
 model{
-    beta0 ~ normal(0.0, 100);                # Diffuse normal priors for predictors
+    beta0 ~ normal(0.0, 100);               // Diffuse normal priors for predictors
     beta1 ~ normal(0.0, 100);
 
-    sigma ~ uniform(0.0, 100);                # Uniform prior for standard deviation
+    sigma ~ normal(0.0, 100);              // Uniform prior for standard deviation
 
     x ~ normal(xmean, 100);
     obsx ~ normal(x, varx);
@@ -89,9 +89,12 @@ model{
 }
 """
 
-# Run mcmc
-fit = pystan.stan(model_code=stan_code, data=toy_data, iter=5000, chains=3,
-                  n_jobs=3, warmup=2500, verbose=False, thin=1)
+# compile model
+model = pystan.StanModel(model_code=stan_code)
+
+# Perform fit
+fit = model.sampling(data=toy_data, iter=5000, chains=3,
+                     n_jobs=3, warmup=2500, verbose=False, thin=1, check_hmc_diagnostics=True)
 
 # Output
 nlines = 8                                   # number of lines in screen output
